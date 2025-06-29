@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧪 Data Alchemist – Assignment by [Your Name]
 
-## Getting Started
+A spreadsheet-like web interface to:
+- Upload CSV data
+- Edit data in-place
+- Validate via AI (or fallback logic)
+- Generate & export business rules
 
-First, run the development server:
+## ✅ Features Implemented
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 📤 Upload CSV for clients, workers, and tasks
+- ✍️ Editable Excel-style data grid
+- 🧠 AI validation (fallbacks to local validator on quota errors)
+- ✅ Validation summary with errors per section
+- 🔧 Manual rule builder with Co-run, Load limit, Slot restriction, Priority
+- 🤖 AI rule generation via prompt
+- 📥 Export rules as `rules.json`
+- 📊 Export validated data as CSV
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js (App Router)
+- Zustand (for file state)
+- Tailwind + ShadCN UI
+- Lucide icons
+- Papaparse for CSV
+- Google Gemini API (fallback local validation)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧩 Future Improvements
 
-## Learn More
+- Add advanced rule types: regex/patterns/precedence
+- Smarter AI-based rule suggestions from dataset
+- Better validations for nested JSON
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Built as part of the **Data Alchemist Assignment**.
