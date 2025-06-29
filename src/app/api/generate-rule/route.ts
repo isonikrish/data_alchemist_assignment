@@ -48,7 +48,7 @@ Now respond with the JSON for:
     const cleaned = raw.replace(/```json|```/g, "").trim();
     const rule = JSON.parse(cleaned);
     return NextResponse.json({ rule });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "AI failed to parse rule." }, { status: 500 });
   }
 }

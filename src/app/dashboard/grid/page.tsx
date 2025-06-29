@@ -9,12 +9,14 @@ import React, { useState } from "react";
 
 type FileKey = "clients" | "workers" | "tasks";
 
-function jsonToCSV(json: any[]): string {
+function jsonToCSV<T extends object>(json: T[]): string {
   if (!json.length) return "";
-  const headers = Object.keys(json[0]);
+
+  const headers = Object.keys(json[0]) as (keyof T)[];
   const rows = json.map((row) =>
     headers.map((header) => JSON.stringify(row[header] ?? "")).join(",")
   );
+
   return [headers.join(","), ...rows].join("\n");
 }
 

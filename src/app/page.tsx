@@ -3,17 +3,17 @@
 import { useRef } from "react";
 import Papa from "papaparse";
 import { useRouter } from "next/navigation";
-import { Upload, Users, Briefcase, ClipboardList, CheckCircle, ArrowRight } from "lucide-react";
+import { Upload, Users, Briefcase, ClipboardList, CheckCircle, ArrowRight, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { useApp } from "./stores/useApp";
+import { CSVRow, useApp } from "./stores/useApp";
 
 type FileKey = "clients" | "workers" | "tasks";
 
 const fileTypes: {
   key: FileKey;
   label: string;
-  icon: any;
+  icon: LucideIcon;
   description: string;
 }[] = [
   {
@@ -54,7 +54,7 @@ export default function UploadFiles() {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
-        setFileData(type, results.data);
+        setFileData(type, results.data as CSVRow[]);
       },
     });
   };
