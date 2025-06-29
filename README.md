@@ -1,4 +1,4 @@
-# 🧪 Data Alchemist – Assignment by [Your Name]
+# 🧪 Data Alchemist Assignment
 
 A spreadsheet-like web interface to:
 - Upload CSV data

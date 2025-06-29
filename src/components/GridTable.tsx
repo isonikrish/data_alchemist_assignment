@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { CSVRow, useApp } from "@/app/stores/useApp";
 import { Button } from "@/components/ui/button";
 
@@ -19,12 +19,11 @@ type ValidationError = {
 function GridTable({ data, type, onValidationChange }: GridTableProps) {
   const { setFileData } = useApp();
   const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
   const [loading, setLoading] = useState(false);
 
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
-  const validateWithAI = useCallback(async (inputData: CSVRow[]) => {
+  const validateWithAI = async (inputData: CSVRow[]) => {
     setLoading(true);
     try {
       const response = await fetch("/api/validate", {
@@ -43,21 +42,18 @@ function GridTable({ data, type, onValidationChange }: GridTableProps) {
     } finally {
       setLoading(false);
     }
-  }, [type, onValidationChange, data]);
+  };
 
-
+  // ✅ Only revalidate when data content actually changes
   useEffect(() => {
     if (!data || data.length === 0) return;
 
-    if (debounceTimeout) clearTimeout(debounceTimeout);
-
     const timeout = setTimeout(() => {
       validateWithAI(data);
-    }, 500);
+    }, 300); // debounce a little
 
-    setDebounceTimeout(timeout);
-  }, [data, validateWithAI]);
-
+    return () => clearTimeout(timeout); // cleanup
+  }, [JSON.stringify(data)]);
 
   const handleCellChange = (rowIndex: number, key: string, value: string) => {
     const updatedRow = { ...data[rowIndex], [key]: value };
@@ -108,10 +104,11 @@ function GridTable({ data, type, onValidationChange }: GridTableProps) {
                     <td key={key} className="px-4 py-2 whitespace-nowrap">
                       <div className="flex flex-col gap-1">
                         <input
-                          className={`w-full bg-transparent outline-none border rounded px-2 py-1 text-sm ${isErrored
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-gray-300 focus:border-purple-500"
-                            }`}
+                          className={`w-full bg-transparent outline-none border rounded px-2 py-1 text-sm ${
+                            isErrored
+                              ? "border-red-500 focus:border-red-500"
+                              : "border-gray-300 focus:border-purple-500"
+                          }`}
                           value={row[key] != null ? String(row[key]) : ""}
                           onChange={(e) =>
                             handleCellChange(rowIndex, key, e.target.value)
